@@ -1,18 +1,23 @@
 # meraki-location-analytics-api-client
 
-# Easily get location analytics from your meraki setup
+# Easily get location analytics from your meraki setup.
+
+## Usage
+This nodejs app collects data from your Meraki APs through the built in Location analytics (CMX) API. It also stores it in MySQL and allows export of the data in JSON.
 
 ## Install
 (instructions are for Ubuntu/Debian based systems)
 
-1. Install node.js and npm `sudo apt-get install npm`
+1. Install node.js, mysql and npm `sudo apt-get install npm nodejs nodejs-legacy mysql-server -y`
 2. Clone this repository `git clone https://github.com/iamtheyammer/meraki-location-analytics-api-client`
 3. Enter the directory `cd meraki-location-analytics-api-client`
-4. Initialise npm in the folder `npm init` and only set the title and version and file: merakiReciever.js.
-5. Install express in there `npm install express`
-6. Install mongodb in there as well `npm install mongo`
-7. Modify merakiReciever.js and set up your validator and secret from the meraki dashboard: either use FTP or `nano merakiReciever.js`
-8. Start node: `node merakiReciever.js`
+4. Initialise npm in the folder `npm init` and only set the title and version and file: app.js.
+5. Install dependencies in there `npm install express body-parser fs mysql --save`
+6. Modify userData.js and enter required information: either use FTP or `nano userData.js`
+7. Start node: `node app.js`
 
 ## Credits
-Most of this was made by Kris Linquist (klinquis@cisco.com), but I've modified it a little bit.
+Original script by Kris Linquist (klinquis@cisco.com).
+I wrote the rest - @iamtheyammer
+
+This was really started when someone tried to deauth our staff network and we needed more data to catch them.
