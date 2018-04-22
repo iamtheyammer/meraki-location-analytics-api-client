@@ -32,6 +32,23 @@ router.get("/", function(req, res) {
 	  return res.send(JSON.stringify({"status":"error", "message":"invalid/missing timespan. max of 2592000 seconds (1 month)"}));
   }
 
+  if (userData.allowedRetrievalIPs[0] != '*') {
+    var validRetrievalIP = false;
+    for (var i = 0; i < userData.allowedRetrievalIPs.length; i++) {
+      if (req.ip.indexOf(userData.allowedRetrievalIPs[i]) != -1) {
+        validRetrievalIP = true;
+        break;
+      } else {
+        validRetrievalIP = false;
+      }
+    }
+    if (validRetrievalIP == false) {
+      console.log(req.ip + ' was blocked from retrieving data.');
+      res.setHeader('Content-Type', 'application/json');
+  	  return res.send(JSON.stringify({"status":"error", "message":"your IP is not on the list of approved retrieval ips. if you\'re using cloudflare (or a non-ip forwarding cdn), turn this feature off."}));
+    }
+  }
+
   var connection = mysql.createConnection({
     host     : userData.mySqlHost,
     user     : userData.mySqlUser,

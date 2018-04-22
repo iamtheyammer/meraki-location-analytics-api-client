@@ -56,7 +56,8 @@ module.exports = {
       IP address of the server that hosts MySQL for you.
       If it's running on this machine, enter `localhost`.
     */
-    var mySqlHost = 'localhost'; //Your MySQL server's IP address.
+    var mySqlHost = 'localhost';
+
     /*
       The user that the script will use to log into MySQL.
       We recommend that you make a non-root user that has INSERT and SELECT permissions.
@@ -65,14 +66,17 @@ module.exports = {
       `GRANT INSERT, SELECT ON [database name].[table name, may be * for all] TO '[username]'@'[server IP, may be localhost]';`
     */
     var mySqlUser = 'cmxapi';
+
     /*
       Password for the user that the script will use to log into MySQL.
     */
     var mySqlUserPassword = 'EMAa6dBtb49twHV7qTd7G[rnGK9NAx8jC&Jk6Y6WTGcQsgAZ8yxjZdwdTbLtTWYb';
+
     /*
       Database name that holds your table.
     */
     var mySqlDatabase = 'cmxapi';
+
     /*
       Table name that will hold your data.
       Need help creating the table? Run the SQL command here: https://pastebin.com/8NeS7j5d
@@ -97,6 +101,16 @@ module.exports = {
       If you put true above, enter a secret for retreving your data.
     */
     var retrievalSecret = 'myDimoodle';
+
+    /*
+      Would you like to only allow certain IP addresses to retrieve data?
+      By default, this value is `*`, which will allow any IP address to retreive data.
+      An example of how this line would look with 3 allowed IPs is below:
+      var allowedRetrievalIPs = ['10.0.0.45', '162.674.368.356', '35.675.87.478'];
+      Currently, we do not support CIDR subnets.
+    */
+    var allowedRetrievalIPs = ['*'];
+
     /*
       END OF USER DATA SETTINGS
 
@@ -105,9 +119,9 @@ module.exports = {
     */
 
     if (differentSecrets == false) {
-      return {'secret':secret, 'validator':validator, 'listenPort':listenPort, 'mySqlHost':mySqlHost, 'mySqlUser':mySqlUser, 'mySqlUserPassword':mySqlUserPassword, 'mySqlDatabase':mySqlDatabase, 'mySqlTable':mySqlTable};
+      return {'secret':secret, 'validator':validator, 'listenPort':listenPort, 'mySqlHost':mySqlHost, 'mySqlUser':mySqlUser, 'mySqlUserPassword':mySqlUserPassword, 'mySqlDatabase':mySqlDatabase, 'mySqlTable':mySqlTable, 'allowedRetrievalIPs':allowedRetrievalIPs};
     } else if (differentSecrets == true) {
-      return {'secret':secret, 'validator':validator, 'listenPort':listenPort, 'mySqlHost':mySqlHost, 'mySqlUser':mySqlUser, 'mySqlUserPassword':mySqlUserPassword, 'mySqlDatabase':mySqlDatabase, 'mySqlTable':mySqlTable, 'retrievalSecret':retrievalSecret};
+      return {'secret':secret, 'validator':validator, 'listenPort':listenPort, 'mySqlHost':mySqlHost, 'mySqlUser':mySqlUser, 'mySqlUserPassword':mySqlUserPassword, 'mySqlDatabase':mySqlDatabase, 'mySqlTable':mySqlTable, 'allowedRetrievalIPs':allowedRetrievalIPs, 'retrievalSecret':retrievalSecret};
     } else {
       throw new Error("Your value for differentSecrets in userData.js is invalid. It must be either `true` or `false`.");
     }
