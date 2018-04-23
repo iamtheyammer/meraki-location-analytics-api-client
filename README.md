@@ -6,6 +6,8 @@
 This nodejs app collects data from your Meraki APs through the built in Location analytics (CMX) API. It also stores it in MySQL and allows export of the data in JSON.
 
 ## Install
+
+### Please don't trust these instructions; they're not currently up to date
 (instructions are for Ubuntu/Debian based systems)
 
 1. Install node.js, mysql and npm `sudo apt-get install npm nodejs nodejs-legacy mysql-server -y`

@@ -12,9 +12,17 @@ This is a little piece of code that allows you to pull in the data from your MyS
 8. Wait until the script is done running and your data should be in the sheet called `Results`.
 
 ## Post first run
+
+#### If you'd like to see all data by timespan
 1. Open your Google Sheet
 2. Go to Add-ons -> [whatever you titled your project in Install step 4] -> Get data
 3. Watch your data flow in like magic!
+
+#### If you'd like to see all data by timespan and MAC address
+1. Open your Google Sheet
+2. Go to Add-ons -> [whatever you titled your project in Install step 4] -> Get data by MAC Address
+3. Paste your MAC Address (formatted like this: `12:12:12:12:12:12`) into the box.
+4. Watch your data for that specific MAC Address flow in like magic!
 
 ## Credits
 Completely built by me. (@iamtheyammer)
