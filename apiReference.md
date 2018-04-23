@@ -9,7 +9,7 @@ This is the document containing how to use the APIs in this project.
 
 #### Retrieving data
 - [By timespan only](#retrieving-data-by-timespan-only)
-- [By timespan and MAC Address](#retrieving-data-by-MAC-address-and-timespan)
+- [By timespan and MAC Address](#retrieving-data-by-MAC-addresses-and-timespan)
 
 ## Validator secret
 Meraki will make a GET request to `http://[yourServerIP]/meraki`.
