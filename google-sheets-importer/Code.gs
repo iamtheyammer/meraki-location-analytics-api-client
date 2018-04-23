@@ -29,8 +29,6 @@ function getCMXData() {
   Logger.log(cmxPrint);
   sheet.getRange(2, 1, cmxData.jsonResponse.length, 13).setValues(cmxPrint);
 
-  // /\ analytics \/ errors
-
 }
 
 function getCMXDataByMac() {
@@ -38,10 +36,10 @@ function getCMXDataByMac() {
   var ui = SpreadsheetApp.getUi();
   var userData = getUserInfo();
 
-  var searchMac = ui.prompt('What MAC Address would you like to search for?', 'Enter a single MAC Address, seperated by colons. Ex. 12:12:12:12:12:12', ui.ButtonSet.OK_CANCEL);
+  var searchMac = ui.prompt('What MAC Address would you like to search for?', 'Enter as many MACs as you want, comma separated. Ex. `12:12:12:12:12:12,13:13:13:13:13:13`', ui.ButtonSet.OK_CANCEL);
   if (searchMac.getSelectedButton() != ui.Button.OK) return;
 
-  var cmxData = apiCall(userData.getUrl + '/specificMac' + '?secret=' + userData.secret + '&timespan=' + userData.timespan + '&macAddress=' + searchMac.getResponseText());
+  var cmxData = apiCall(userData.getUrl + '/specificMac' + '?secret=' + userData.secret + '&timespan=' + userData.timespan + '&macAddresses=' + searchMac.getResponseText());
   var cmxPrint = [];
 
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Results").activate();

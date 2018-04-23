@@ -57,7 +57,7 @@ router.get("/", function(req, res) {
   });
   var time = new Date() / 1000; //get epoch time
   time -= req.query.timespan;
-  var sql = 'SELECT id, apMac, clientMac, ipv4, ipv6, seenEpoch, ssid, rssi, manufacturer, os, lat, lng, unc FROM ' + userData.mySqlTable + ' WHERE seenEpoch>=' + time + ';';
+  var sql = 'SELECT * FROM ' + userData.mySqlTable + ' WHERE seenEpoch>=' + time + ';';
   connection.query(sql, function (error, results, fields) {
     queryResults = results;
     if (!queryResults[0]) {
@@ -88,9 +88,9 @@ router.get("/specificMAC", function (req, res) {
     return res.send(JSON.stringify({"status":"error", "message":"invalid/missing timespan. max of 2592000 seconds (1 month)"}));
   }
 
-  if (req.query.macAddress.length < 17 || req.query.macAddress.length > 18) {
+  if (!req.query.macAddresses || req.query.macAddresses.length < 17) {
     res.setHeader('Content-Type', 'application/json');
-    return res.send(JSON.stringify({"status":"error", "message":"specfied MAC address is too short or long."}));
+    return res.send(JSON.stringify({"status":"error", "message":"specfied MAC address is too short or you didn't specify one.",'providedMacAddresses':req.query.macAddresses}));
   }
   if (userData.allowedRetrievalIPs[0] != '*') {
     var validRetrievalIP = false;
@@ -117,7 +117,18 @@ router.get("/specificMAC", function (req, res) {
   });
   var time = new Date() / 1000; //get epoch time
   time -= req.query.timespan;
-  var sql = 'SELECT id, apMac, clientMac, ipv4, ipv6, seenEpoch, ssid, rssi, manufacturer, os, lat, lng, unc FROM ' + userData.mySqlTable + ' WHERE seenEpoch>=' + time + ' AND clientMac=' + mysql.escape(req.query.macAddress) + ';';
+  //make the SQL statement:
+  var sql = 'SELECT * FROM ' + userData.mySqlTable + ' WHERE clientMac IN (' ;
+  var selectedMacs = req.query.macAddresses.split(',');
+  for (var i = 0; i < selectedMacs.length; i++) {
+    sql += mysql.escape(selectedMacs[i]) + ',';
+  }
+  if (sql.endsWith(',')) sql = sql.slice(0, sql.length-1); //make sure we don't have a trailing comma
+  sql += ') AND seenEpoch>=' + time + ';';
+  //final SQL statement should look like this:
+  // SELECT * FROM [myTable] WHERE clientMac IN ('12:12:12:12:12:12', '13:13:13:13:13:13') AND seenEpoch < 1524463665;
+
+  //OLD -- var sql = 'SELECT * FROM ' + userData.mySqlTable + ' WHERE seenEpoch>=' + time + ' AND clientMac=' + mysql.escape(req.query.macAddress) + ';';
   connection.query(sql, function (error, results, fields) {
     queryResults = results;
     if (!queryResults[0]) {
