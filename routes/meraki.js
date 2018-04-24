@@ -4,7 +4,7 @@
 var express = require('express'); //requires
 var router = express.Router();
 var mysql = require('mysql');
-var userData = require("../userData.js");
+var userData = require("../other/discreetFunctions.js");
 userData = userData.getUserData();
 var bodyParser = require("body-parser");
 var jsonParser = bodyParser.json();

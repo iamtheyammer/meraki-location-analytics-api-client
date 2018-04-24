@@ -4,7 +4,7 @@
 var express = require('express'); //requires
 var router = express.Router();
 var mysql = require('mysql');
-var userData = require("../userData.js");
+var userData = require("../other/discreetFunctions.js");
 userData = userData.getUserData();
 //Middle ware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -13,7 +13,6 @@ router.use(function timeLog(req, res, next) {
 });
 
 router.get("/", function(req, res) {
-
   var queryResults = [];
   if (userData.retrievalSecret) { //check secrets
     if (req.query.secret != userData.retrievalSecret) {
@@ -92,10 +91,12 @@ router.get("/specificMAC", function (req, res) {
     res.setHeader('Content-Type', 'application/json');
     return res.send(JSON.stringify({"status":"error", "message":"specfied MAC address is too short or you didn't specify one.",'providedMacAddresses':req.query.macAddresses}));
   }
-  if (userData.allowedRetrievalIPs[0] != '*') {
+
+  var allowedRetrievalIPs = userData.allowedRetrievalIPs.split(',');
+  if (allowedRetrievalIPs[0] != '*') {
     var validRetrievalIP = false;
-    for (var i = 0; i < userData.allowedRetrievalIPs.length; i++) {
-      if (req.ip.indexOf(userData.allowedRetrievalIPs[i]) != -1) {
+    for (var i = 0; i < allowedRetrievalIPs.length; i++) {
+      if (req.ip.indexOf(allowedRetrievalIPs[i]) != -1) {
         validRetrievalIP = true;
         break;
       } else {
