@@ -29,7 +29,9 @@ router.get("/", function(req, res) {
 });
 
 router.post("/post", urlencodedParser, function(req, res) {
-
+  if (!req.body.allowedRetrievalIPs) {
+    var allowedRetrievalIPs = '*';
+  }
   var userData = {'validator':req.body.validator,'secret':req.body.secret,'port':req.body.port,'mySqlHost':req.body.mySqlHost,'mySqlUser':req.body.mySqlUser,'mySqlUserPassword':req.body.mySqlUserPassword,'mySqlDatabase':req.body.mySqlDatabase,'mySqlTable':req.body.mySqlTable,'retrievalSecret':req.body.retrievalSecret,'allowedRetrievalIPs':req.body.allowedRetrievalIPs};
   var userDataPath = path.join(__dirname, '../other/userData.json');
 

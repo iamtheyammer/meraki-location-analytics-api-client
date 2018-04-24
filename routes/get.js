@@ -31,10 +31,11 @@ router.get("/", function(req, res) {
 	  return res.send(JSON.stringify({"status":"error", "message":"invalid/missing timespan. max of 2592000 seconds (1 month)"}));
   }
 
-  if (userData.allowedRetrievalIPs[0] != '*') {
+  var allowedRetrievalIPs = userData.allowedRetrievalIPs.split(',');
+  if (allowedRetrievalIPs[0] != '*') {
     var validRetrievalIP = false;
-    for (var i = 0; i < userData.allowedRetrievalIPs.length; i++) {
-      if (req.ip.indexOf(userData.allowedRetrievalIPs[i]) != -1) {
+    for (var i = 0; i < allowedRetrievalIPs; i++) {
+      if (req.ip.indexOf(allowedRetrievalIPs[i]) != -1) {
         validRetrievalIP = true;
         break;
       } else {
