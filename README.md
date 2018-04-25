@@ -37,6 +37,19 @@ Just start the app - `node app.js`
 ## API Reference
 View apiReference.md in the root directory of this repository.
 
+## Changing settings
+It's easy to change settings you've already set. Just visit http://[yourServerIP]/setup, enter the validator string and your input secret (they're both available in the Meraki dashboard), then you can enter all settings like a fresh installation.  
+
+Important: Your server will may not be able to receive data from Meraki or export data until setup is complete.
+
+## Recovery
+If you somehow screw up your server and can't access the settings page, recovery is easy.
+To reset your server to factory settings (important: no data will be lost from your MySQL table), follow these instructions:
+
+1. SFTP/SSH into your server and delete `other/userData.json`
+2. Make a new file, called `userData.json` in the `other` directory, then paste this into it: `{"status":"setupRequired","port":"9201"}`. You can change the port if needed.
+3. Visit http://[yourServerIP]/setup and enter all needed information.
+
 ## Credits
 Original script (merakiReciever.js) by Kris Linquist (klinquis@cisco.com).
 I wrote the rest - @iamtheyammer

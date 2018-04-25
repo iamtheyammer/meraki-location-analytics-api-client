@@ -4,8 +4,7 @@
 var express = require('express'); //requires
 var router = express.Router();
 var mysql = require('mysql');
-var userData = require("../other/discreetFunctions.js");
-userData = userData.getUserData();
+var discreetFunctions = require("../other/discreetFunctions.js");
 //Middle ware that is specific to this router
 router.use(function timeLog(req, res, next) {
   //console.log('Time: ', Date.now());
@@ -13,6 +12,7 @@ router.use(function timeLog(req, res, next) {
 });
 
 router.get("/", function(req, res) {
+  var userData = discreetFunctions.getUserData();
   var queryResults = [];
   if (userData.retrievalSecret) { //check secrets
     if (req.query.secret != userData.retrievalSecret) {
@@ -70,6 +70,7 @@ router.get("/", function(req, res) {
 });
 
 router.get("/specificMAC", function (req, res) {
+  var userData = discreetFunctions.getUserData();
   var queryResults = [];
   if (userData.retrievalSecret) { //check secrets
     if (req.query.secret != userData.retrievalSecret) {

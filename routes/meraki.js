@@ -4,8 +4,7 @@
 var express = require('express'); //requires
 var router = express.Router();
 var mysql = require('mysql');
-var userData = require("../other/discreetFunctions.js");
-userData = userData.getUserData();
+var discreetFunctions = require("../other/discreetFunctions.js");
 var bodyParser = require("body-parser");
 var jsonParser = bodyParser.json();
 //Middle ware that is specific to this router
@@ -15,12 +14,13 @@ router.use(function timeLog(req, res, next) {
 });
 
 router.get('/', function(req, res){ //final path [server]:[port]/meraki
-  res.send(userData.validator); //get and send validator string
+  res.send(discreetFunctions.getUserData().validator); //get and send validator string
   console.log("sending validation");
 });
 
 router.post('/', jsonParser, function(req, res){ //final path [server]:[port]/meraki
 	try {
+    var userData = discreetFunctions.getUserData();
 	  var merakiData = req.body.data;
 	  if (req.body.secret == userData.secret) {
       var connection = mysql.createConnection({
@@ -68,6 +68,8 @@ router.post('/', jsonParser, function(req, res){ //final path [server]:[port]/me
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({"status":"error", "message":"invalid secret"}));
 	 }
+   res.setHeader('Content-Type', 'application/json');
+   res.send(JSON.stringify({"status":"OK"}));
 	} catch (e) {
 		// An error has occured, handle it, by e.g. logging it
   	console.log("Error. Could be caused by an invalid POST from " + req.connection.remoteAddress + ":");
