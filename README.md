@@ -6,7 +6,7 @@
 
 - [Usage](#usage)
 - [Install](#install)
-  - [MySQL Instructions](#mysql-instructions)
+  - [MySQL Instructions](#mysql-instructions-most-people-start-here)
   - [Using a pre-built binary](#using-a-pre-built-binary)
   - [Building from source](#building-from-source)
 - [Starting the server](#starting-the-server)
