@@ -12,7 +12,7 @@
 - [Starting the server](#starting-the-server)
   - [With tmux](#with-tmux)
   - [Without tmux](#without-tmux)
-- [API Reference](#api-referenceretrieving-data)
+- [API Reference/Retrieving data](#api-referenceretrieving-data)
 - [Changing settings](#changing-settings)
 - [Recovery](#recovery)
 - [Credits](#credits)
