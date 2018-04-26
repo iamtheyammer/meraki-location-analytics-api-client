@@ -46,7 +46,7 @@ router.post("/verify/post", urlencodedParser, function (req, res) {
     return res.send('<head><meta http-equiv="refresh" content="0; url=/setup" /></head>');
   } else {
     res.setHeader('Content-Type', 'text/html');
-    return res.send('<html><h2>Your validator string or secret was incorrect.</h2></html>');
+    return res.send('<html><head><meta http-equiv="refresh" content="2; url=/setup" /></head><h2>Your validator string or secret was incorrect.</h2><p>Redirecting back to setup page...</p></html>');
   }
 });
 
@@ -54,7 +54,7 @@ router.post("/post", urlencodedParser, function(req, res) {
 
   if (discreetFunctions.getUserData().status != 'setupRequired') {
     res.setHeader('Content-Type', 'application/json');
-    return res.send(JSON.stringify({'status':'error','message':'setup is not currently available for this server.'})); 
+    return res.send(JSON.stringify({'status':'error','message':'setup is not currently available for this server.'}));
   }
 
   if (!req.body.allowedRetrievalIPs) {

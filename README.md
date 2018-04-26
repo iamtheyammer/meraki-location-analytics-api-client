@@ -2,10 +2,52 @@
 
 # Easily get location analytics from your meraki setup.
 
+## Table of contents
+
+- [Usage](#usage)
+- [Install](#install)
+  - [MySQL Instructions](#mysql-instructions)
+  - [Using a pre-built binary](#using-a-pre-built-binary)
+  - [Building from source](#building-from-source)
+- [Starting the server](#starting-the-server)
+  - [With tmux](#with-tmux)
+  - [Without tmux](#without-tmux)
+- [API Reference](#api-reference)
+- [Changing settings](#changing-settings)
+- [Recovery](#recovery)
+- [Credits](#credits)
+
+
 ## Usage
 This nodejs app collects data from your Meraki APs through the built in Location analytics (CMX) API. It also stores it in MySQL and allows export of the data in JSON.
 
 ## Install
+
+### MySQL Instructions (most people start here):
+If you plan to install and run the MySQL database this app needs on the same system that will run the app, run these commands on the system hosting both the app and MySQL. If you plan to run MySQL on another system, make sure that it both runs on port 3306 and that it's reachable by this app. On any system you're running MySQL on, #s 4-6 should be applicable in some way.
+
+(instructions are for Ubuntu/Debian based systems)
+
+1. Install mysql server `sudo apt-get install mysql-server -y`
+2. Setup MySQL server `sudo mysql_secure_installation`
+3. Create a MySQL database - `mysql -u root -p` and enter the root password. Then `CREATE DATABASE [databaseName];`
+4. Create a table inside of that database - use the command [here](https://pastebin.com/8NeS7j5d)
+5. Add a user with SELECT and INSERT permissions on that database. `GRANT INSERT, SELECT ON [database name].[table name, may be * for all] TO '[username]'@'[server IP, may be localhost]';`
+6. Continue with the steps below: [using a pre-built binary (easy)](#using-a-pre-built-binary) or [building from source (more difficult)](#building-from-source)
+
+### Using a pre-built binary
+Using a pre-built binary means that you can't see or change the source code. While it might be a little less fun for developers, it's the easiest way to run someone else's app on your system. Using the pre-built binary means that you don't have to install things like `npm`, `nodejs` and other packages necessary for running from source.
+
+Our pre-built binaries are tested on Ubuntu 16.04 64-bit (xenial). While it might (and probably will) work on other linux systems, we've only tested it on 16.04. If the binary doesn't work for you, you'll have to build from source.
+
+1. Download the cmx-api-reciever-[your os flavour].zip file from the releases page.
+2. Unzip the file wherever you'd like to run the app
+3. Allow the file to be executed - `chmod +x ./app`
+4. Start the app - `node app.js`
+(Note: if you're using SSH and you want the process to last after your SSH session ends, use a terminal multiplexer like tmux. use instructions: `sudo apt-get install tmux`, `tmux new -s "[session-name]"`. to exit a tmux session, `^B, d`)
+
+### Building from source
+Building from source allows the maximum compatibility with systems including Windows, macOS and other linux distros. It also allows developers to run the app with much more customisation and freedom. It's more difficult and requires
 (instructions are for Ubuntu/Debian based systems)
 
 1. Install mysql server `sudo apt-get install mysql-server -y`
@@ -25,6 +67,9 @@ This nodejs app collects data from your Meraki APs through the built in Location
 ## Starting the server
 
 ### With tmux
+#### We recommend that most users use tmux.
+
+tmux is short for terminal multiplexer. It allows you to run a terminal session that doesn't care if you terminate your ssh session (and more). You can start up a terminal, run a command, like this app, and it will run even after you terminate your ssh session.
 1. Start a tmux session `tmux new -s [cmxapi/sessionNameYouChoose]`
 2. Start the app `node app.js`
 3. Detach from it `^B, d`
