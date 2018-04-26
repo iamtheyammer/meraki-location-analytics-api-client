@@ -12,7 +12,7 @@
 - [Starting the server](#starting-the-server)
   - [With tmux](#with-tmux)
   - [Without tmux](#without-tmux)
-- [API Reference](#api-reference)
+- [API Reference](#api-referenceretrieving-data)
 - [Changing settings](#changing-settings)
 - [Recovery](#recovery)
 - [Credits](#credits)
@@ -79,7 +79,7 @@ tmux is short for terminal multiplexer. It allows you to run a terminal session 
 ### Without tmux
 Just start the app - `node app.js`
 
-## API Reference
+## API Reference/Retrieving data
 View apiReference.md in the root directory of this repository.
 
 ## Changing settings
