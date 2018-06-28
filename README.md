@@ -31,7 +31,7 @@ If you plan to install and run the MySQL database this app needs on the same sys
 1. Install mysql server `sudo apt-get install mysql-server -y`
 2. Setup MySQL server `sudo mysql_secure_installation`
 3. Create a MySQL database - `mysql -u root -p` and enter the root password. Then `CREATE DATABASE [databaseName];`
-4. Create a table inside of that database - use the command [here](https://pastebin.com/8NeS7j5d)
+4. Create a table inside of that database - use the command [here](https://github.com/iamtheyammer/meraki-location-analytics-api-client/blob/master/mysql-table-create.md)
 5. Add a user with SELECT and INSERT permissions on that database. `GRANT INSERT, SELECT ON [database name].[table name, may be * for all] TO '[username]'@'[server IP, may be localhost]';`
 6. Continue with the steps below: [using a pre-built binary (easy)](#using-a-pre-built-binary) or [building from source (more difficult)](#building-from-source)
 
